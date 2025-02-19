@@ -21,14 +21,27 @@
             text-align: left;
             white-space: pre-wrap;
         }
+        select {
+            margin-bottom: 10px;
+            padding: 5px;
+            font-size: 16px;
+        }
     </style>
 </head>
 <body>
     <h1>Jupyter Notebook Code Viewer</h1>
+    <select id="notebookSelector" onchange="loadNotebook()">
+        <option value="notebook.ipynb">Notebook 1</option>
+        <option value="notebook2.ipynb">Notebook 2</option>
+        <option value="notebook3.ipynb">Notebook 3</option>
+        <option value="notebook4.ipynb">Notebook 4</option>
+        <option value="notebook5.ipynb">Notebook 5</option>
+    </select>
     <pre id="code"></pre>
     <script>
         async function loadNotebook() {
-            const response = await fetch('notebook.ipynb'); // Ensure the file is hosted
+            const notebookFile = document.getElementById('notebookSelector').value;
+            const response = await fetch(notebookFile);
             const notebook = await response.json();
             const codeCells = notebook.cells.filter(cell => cell.cell_type === 'code');
             const codeText = codeCells.map(cell => cell.source.join('\n')).join('\n\n');
