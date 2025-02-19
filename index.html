@@ -7,47 +7,85 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background-color: #282c36;
+            color: #ffffff;
             text-align: center;
             margin: 0;
             padding: 20px;
         }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            background: #1e1e1e;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+        }
         pre {
-            background-color: #fff;
+            background-color: #2d2d2d;
+            color: #50fa7b;
             padding: 15px;
             border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
             overflow-x: auto;
             text-align: left;
             white-space: pre-wrap;
+            font-family: monospace;
+            max-height: 500px;
+            overflow-y: auto;
         }
         select {
             margin-bottom: 10px;
-            padding: 5px;
+            padding: 8px;
             font-size: 16px;
+            background: #444;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 15px;
+            font-size: 16px;
+            background: #50fa7b;
+            color: #282c36;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background: #40d97a;
         }
     </style>
 </head>
 <body>
-    <h1>Jupyter Notebook Code Viewer</h1>
-    <select id="notebookSelector" onchange="loadNotebook()">
-        <option value="notebook.ipynb">Notebook 1</option>
-        <option value="notebook2.ipynb">Notebook 2</option>
-        <option value="notebook3.ipynb">Notebook 3</option>
-        <option value="notebook4.ipynb">Notebook 4</option>
-        <option value="notebook5.ipynb">Notebook 5</option>
-    </select>
-    <pre id="code"></pre>
+    <div class="container">
+        <h1>Jupyter Notebook Code Viewer</h1>
+        <select id="notebookSelector">
+            <option value="notebook.ipynb">Notebook 1</option>
+            <option value="notebook2.ipynb">Notebook 2</option>
+            <option value="notebook3.ipynb">Notebook 3</option>
+            <option value="notebook4.ipynb">Notebook 4</option>
+            <option value="notebook5.ipynb">Notebook 5</option>
+        </select>
+        <button onclick="loadNotebook()">Load Code</button>
+        <pre id="code">Select a notebook and click 'Load Code'.</pre>
+    </div>
     <script>
         async function loadNotebook() {
             const notebookFile = document.getElementById('notebookSelector').value;
-            const response = await fetch(notebookFile);
-            const notebook = await response.json();
-            const codeCells = notebook.cells.filter(cell => cell.cell_type === 'code');
-            const codeText = codeCells.map(cell => cell.source.join('\n')).join('\n\n');
-            document.getElementById('code').textContent = codeText;
+            document.getElementById('code').textContent = "Loading...";
+            try {
+                const response = await fetch(notebookFile);
+                if (!response.ok) throw new Error("File not found");
+                const notebook = await response.json();
+                const codeCells = notebook.cells.filter(cell => cell.cell_type === 'code');
+                const codeText = codeCells.map(cell => cell.source.join('\n')).join('\n\n');
+                document.getElementById('code').textContent = codeText || "No code found in this notebook.";
+            } catch (error) {
+                document.getElementById('code').textContent = "Error loading notebook: " + error.message;
+            }
         }
-        loadNotebook();
     </script>
 </body>
 </html>
