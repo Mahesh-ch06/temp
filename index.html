@@ -20,20 +20,22 @@
             padding: 20px;
             background: #161b22;
             border-radius: 12px;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1);
             text-align: center;
             transition: all 0.3s ease-in-out;
         }
         h1 {
-            font-size: 26px;
+            font-size: 28px;
             color: #58a6ff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         pre {
-            background-color: #2d2d2d;
+            background: #1e1e1e;
             color: #f8f8f2;
             padding: 15px;
             border-radius: 8px;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+            box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.1);
             overflow-x: auto;
             text-align: left;
             white-space: pre-wrap;
@@ -42,7 +44,7 @@
             overflow-y: auto;
         }
         select, button {
-            padding: 12px;
+            padding: 12px 15px;
             font-size: 16px;
             background: #21262d;
             color: #ffffff;
@@ -54,14 +56,11 @@
         }
         button {
             background: #238636;
-            color: #ffffff;
             font-weight: bold;
             display: flex;
             align-items: center;
             justify-content: center;
-        }
-        button i {
-            margin-left: 8px;
+            gap: 8px;
         }
         button:hover {
             background: #2ea043;
@@ -94,7 +93,7 @@
     <div class="container fade-in">
         <h1>📜 Jupyter Notebook Code Viewer</h1>
         <select id="notebookSelector">
-            <option value="notebook.ipynb">Notebook 1</option>
+            <option value="notebook1.ipynb">Notebook 1</option>
             <option value="notebook2.ipynb">Notebook 2</option>
             <option value="notebook3.ipynb">Notebook 3</option>
             <option value="notebook4.ipynb">Notebook 4</option>
