@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jupyter Notebook Code Viewer</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
     <style>
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #121212;
+            background-color: #0d1117;
             color: #ffffff;
             text-align: center;
             margin: 0;
@@ -17,14 +18,15 @@
             max-width: 900px;
             margin: auto;
             padding: 20px;
-            background: #1e1e1e;
+            background: #161b22;
             border-radius: 12px;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
             text-align: center;
+            transition: all 0.3s ease-in-out;
         }
         h1 {
-            font-size: 24px;
-            color: #50fa7b;
+            font-size: 26px;
+            color: #58a6ff;
         }
         pre {
             background-color: #2d2d2d;
@@ -38,32 +40,37 @@
             font-family: 'Courier New', monospace;
             max-height: 500px;
             overflow-y: auto;
-            transition: all 0.3s ease-in-out;
         }
         select, button {
-            padding: 10px;
+            padding: 12px;
             font-size: 16px;
-            background: #444;
-            color: #fff;
-            border: none;
+            background: #21262d;
+            color: #ffffff;
+            border: 1px solid #58a6ff;
             border-radius: 6px;
             cursor: pointer;
             margin: 10px;
             transition: all 0.3s;
         }
         button {
-            background: #50fa7b;
-            color: #121212;
+            background: #238636;
+            color: #ffffff;
             font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        button i {
+            margin-left: 8px;
         }
         button:hover {
-            background: #40d97a;
+            background: #2ea043;
             transform: scale(1.05);
         }
         .loader {
             display: none;
             border: 4px solid rgba(255, 255, 255, 0.1);
-            border-left-color: #50fa7b;
+            border-left-color: #58a6ff;
             border-radius: 50%;
             width: 30px;
             height: 30px;
@@ -74,11 +81,18 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Jupyter Notebook Code Viewer</h1>
+    <div class="container fade-in">
+        <h1>📜 Jupyter Notebook Code Viewer</h1>
         <select id="notebookSelector">
             <option value="notebook.ipynb">Notebook 1</option>
             <option value="notebook2.ipynb">Notebook 2</option>
@@ -86,7 +100,7 @@
             <option value="notebook4.ipynb">Notebook 4</option>
             <option value="notebook5.ipynb">Notebook 5</option>
         </select>
-        <button onclick="loadNotebook()">Load Code</button>
+        <button onclick="loadNotebook()">Load Code <i class="fas fa-code"></i></button>
         <div class="loader" id="loader"></div>
         <pre id="code">Select a notebook and click 'Load Code'.</pre>
     </div>
@@ -107,7 +121,7 @@
                 const codeText = codeCells.map(cell => cell.source.join('\n')).join('\n\n');
                 codeElement.textContent = codeText || "No code found in this notebook.";
             } catch (error) {
-                codeElement.textContent = "Error loading notebook: " + error.message;
+                codeElement.textContent = "❌ Error loading notebook: " + error.message;
             } finally {
                 loader.style.display = "none";
             }
