@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jupyter Notebook Code Viewer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+        pre {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow-x: auto;
+            text-align: left;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <h1>Jupyter Notebook Code Viewer</h1>
+    <pre id="code"></pre>
+    <script>
+        async function loadNotebook() {
+            const response = await fetch('notebook.ipynb'); // Ensure the file is hosted
+            const notebook = await response.json();
+            const codeCells = notebook.cells.filter(cell => cell.cell_type === 'code');
+            const codeText = codeCells.map(cell => cell.source.join('\n')).join('\n\n');
+            document.getElementById('code').textContent = codeText;
+        }
+        loadNotebook();
+    </script>
+</body>
+</html>
